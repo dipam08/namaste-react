@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 
-const Title = () => <h1>Dipam Dutta </h1>;
+const Title = () => <h1>Hello World </h1>;
 
 const Heading = () => (
   <div className="container">
