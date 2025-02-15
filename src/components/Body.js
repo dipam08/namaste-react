@@ -1,9 +1,24 @@
 import RestaurantCards from "./RestaurantCards";
 import resList from "../utils/mockswiggyData";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Body = () => {
-  let [listOfRestaurants, setListOfRestaurants] = useState(resList);
+  let [listOfRestaurants, setListOfRestaurants] = useState([]);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    const data = await fetch(
+      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=22.5090392&lng=88.33294269999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+    );
+    const json = await data.json();
+    console.log(json);
+    setListOfRestaurants(
+      json?.data.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+    );
+  };
 
   return (
     <div className="body">
@@ -13,7 +28,7 @@ const Body = () => {
           onClick={() => {
             // Filter Logic
             const filteredList = listOfRestaurants.filter(
-              (res) => res.card.card.info.avgRating > 4
+              (res) => res?.info.avgRating > 4.5
             );
             setListOfRestaurants(filteredList);
             console.log(filteredList);
@@ -26,7 +41,7 @@ const Body = () => {
       <div className="restaurant-container">
         {listOfRestaurants.map((restaurant) => (
           <RestaurantCards
-            key={restaurant.card.card.info.id}
+            // key={restaurant.card.card.info.id}
             resData={restaurant}
           />
         ))}
