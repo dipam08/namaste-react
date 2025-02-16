@@ -1,9 +1,11 @@
 import RestaurantCards from "./RestaurantCards";
 import resList from "../utils/mockswiggyData";
 import { useEffect, useState } from "react";
+import Shimmer from "./Shimmer";
 
 const Body = () => {
   let [listOfRestaurants, setListOfRestaurants] = useState([]);
+  const [searchText, setsearchText] = useState("");
 
   useEffect(() => {
     fetchData();
@@ -20,7 +22,15 @@ const Body = () => {
     );
   };
 
-  return (
+  // if (listOfRestaurants.length === 0) {
+  //   return <Shimmer></Shimmer>;
+  // }
+
+  // Conditional Rendering
+
+  return listOfRestaurants.length === 0 ? (
+    <Shimmer />
+  ) : (
     <div className="body">
       <div className="filter">
         <button
@@ -36,14 +46,34 @@ const Body = () => {
         >
           Top Rated Restaurants
         </button>
+        <div className="search">
+          <input
+            className="search-box"
+            type="text"
+            value={searchText}
+            onChange={(e) => {
+              setsearchText(e.target.value);
+              // console.log(searchText);
+            }}
+          ></input>
+          <button
+            onClick={() => {
+              const filteredsearchRestuarant = listOfRestaurants.filter(
+                (res) => {
+                  res.data?.info?.name.includes(searchText);
+                }
+              );
+              setListOfRestaurants(filteredsearchRestuarant);
+              console.log("Dipam");
+            }}
+          >
+            Search
+          </button>
+        </div>
       </div>
-      {/* <div className="search">Search</div> */}
       <div className="restaurant-container">
         {listOfRestaurants.map((restaurant) => (
-          <RestaurantCards
-            // key={restaurant.card.card.info.id}
-            resData={restaurant}
-          />
+          <RestaurantCards key={restaurant?.info.id} resData={restaurant} />
         ))}
       </div>
     </div>
