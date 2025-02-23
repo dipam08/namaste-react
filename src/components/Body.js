@@ -60,11 +60,13 @@ const Body = () => {
             onClick={() => {
               const filteredsearchRestuarant = listOfRestaurants.filter(
                 (res) => {
-                  res.data?.info?.name.includes(searchText);
+                  return res.info?.name
+                    ?.toLowerCase()
+                    .includes(searchText.toLowerCase());
                 }
               );
               setListOfRestaurants(filteredsearchRestuarant);
-              console.log("Dipam");
+              console.log(filteredsearchRestuarant);
             }}
           >
             Search
