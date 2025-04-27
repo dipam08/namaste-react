@@ -5,6 +5,7 @@ import Shimmer from "./Shimmer";
 
 const Body = () => {
   let [listOfRestaurants, setListOfRestaurants] = useState([]);
+  const [filteredRestaurant, setfiletredRestaurant] = useState([]);
   const [searchText, setsearchText] = useState("");
 
   useEffect(() => {
@@ -18,6 +19,9 @@ const Body = () => {
     const json = await data.json();
     console.log(json);
     setListOfRestaurants(
+      json?.data.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+    );
+    setfiletredRestaurant(
       json?.data.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
   };
@@ -65,7 +69,7 @@ const Body = () => {
                     .includes(searchText.toLowerCase());
                 }
               );
-              setListOfRestaurants(filteredsearchRestuarant);
+              setfiletredRestaurant(filteredsearchRestuarant);
               console.log(filteredsearchRestuarant);
             }}
           >
@@ -74,7 +78,7 @@ const Body = () => {
         </div>
       </div>
       <div className="restaurant-container">
-        {listOfRestaurants.map((restaurant) => (
+        {filteredRestaurant.map((restaurant) => (
           <RestaurantCards key={restaurant?.info.id} resData={restaurant} />
         ))}
       </div>

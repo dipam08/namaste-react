@@ -7,7 +7,7 @@ const Header = () => {
   return (
     <div className="header">
       <div className="logo-container">
-        <img src={LOGO_URL} />
+        <img src={LOGO_URL} className="logo-image" />
       </div>
       <div className="nav-items">
         <ul>

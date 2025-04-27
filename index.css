@@ -1,13 +1,16 @@
 .header{
     display: flex;
     justify-content: space-between;
-    border: 1px solid black;
+    /* border: 1px solid black; */
 }
 
-.logo-container{
-    width: 200px;
-}
+/* .logo-container{
+    width: 150px;
+} */
 
+.logo-image{
+    width: 150px;
+}
 .nav-items{
     padding: 30px;
 }
